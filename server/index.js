@@ -10,7 +10,10 @@ const port = 5000;
 app.use(cors());
 app.use(express.json());
 
-
+app.use(cors({
+  origin: "*", // Or specific frontend URL
+  methods: ["GET", "POST"]
+}));
 
 app.post("/api/download", async (req, res) => {
   const { url } = req.body;
