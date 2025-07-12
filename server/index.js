@@ -3,9 +3,12 @@ const cors = require("cors");
 const fs = require("fs");
 const path = require("path");
 const youtubedl = require("youtube-dl-exec");
+const dotenv = require("dotenv")
 
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
+
+require('dotenv').config();
 
 app.use(cors());
 app.use(express.json());
@@ -63,9 +66,9 @@ app.post("/api/download", async (req, res) => {
         : null,
     });
   } catch (err) {
-    console.error("❌ Fetch Info Error:", err);
-    res.status(500).json({ error: "Failed to fetch video info" });
-  }
+  console.error("❌ Fetch Info Error:", err?.message || err);
+  res.status(500).json({ error: err?.message || "Failed to fetch video info" });
+}
 });
 
 
